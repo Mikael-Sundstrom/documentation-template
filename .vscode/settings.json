@@ -1,0 +1,39 @@
+{
+	"files.exclude": {
+		".vscode": false,
+		"README.md": false
+	},
+	"workbench.colorTheme": "Default Dark+",
+	"editor.tabSize": 4,
+	"editor.fontSize": 16,
+	"editor.linkedEditing": true,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"editor.formatOnSave": true,
+	"editor.minimap.enabled": false,
+	"editor.minimap.maxColumn": 256,
+	"scss.lint.compatibleVendorPrefixes": "ignore",
+	"terminal.integrated.profiles.windows": {
+		"Git Bash": {
+			"path": "C:\\Program Files\\Git\\bin\\bash.exe"
+		},
+	},
+	"terminal.integrated.defaultProfile.windows": "Git Bash",
+	// Live Server
+	"liveServer.settings.NoBrowser": true,
+	// SASS
+	"liveSassCompile.settings.formats": [
+		{
+			"format": "expanded",
+			"extensionName": ".css",
+			"savePath": "/dist/css",
+			"savePathReplacementPairs": null
+		}
+	],
+	"liveSassCompile.settings.excludeList": [
+		"/**/node_modules/**",
+		"/.vscode/**",
+		"/**/materialize/**"
+	],
+	"references.preferredLocation": "peek"
+}

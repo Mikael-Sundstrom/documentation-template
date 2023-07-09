@@ -1,0 +1,30 @@
+// https://betterprogramming.pub/getting-strict-with-typescript-2e906b48c0a
+{
+	"compilerOptions": {
+		"strict": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"alwaysStrict": true,
+		"forceConsistentCasingInFileNames": true,
+		"target": "ESNext",
+		"rootDir": "src/ts",
+		"moduleResolution": "Node16",
+		"sourceMap": false,
+		"allowJs": true,
+		"module": "ESNext",
+		"outDir": "dist/js",
+		/*
+		"module": "System",
+		"outFile": "./dist/js/bundle.js",
+		*/
+	},
+	"include": [
+		"src"
+	],
+	"exclude": [
+		"node_modules",
+		".vscode/**",
+		"src/scss",
+		"**/node_modules/*",
+	]
+}
