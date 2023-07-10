@@ -1,16 +1,23 @@
 import { Cleanable } from "./interfaces"
 
-/*  */
+/**
+ * An object for storing cache data.
+ * The object key is the cache key and the value is the cached data.
+ */
 export let cache: { [key: string]: any } = {}
 
-/*  */
-export const BASE_PATH = window.location.hostname === 'localhost' ? '/docs' : ''
-
-/*  */
+/**
+ * This function registers a Cleanable instance for cleanup when destroyed.
+ *
+ * @param {Cleanable} instance - The Cleanable instance to be registered for cleanup.
+ */
 export function cleanOnDestroy(instance: Cleanable) {
 	cleanableStore.add(instance)
 }
-/*  */
+
+/**
+ * A store for managing Cleanable instances.
+ */
 class CleanableStore {
 	private instances: Cleanable[] = []
 
@@ -18,18 +25,31 @@ class CleanableStore {
 		this.clean = this.clean.bind(this)
 	}
 
+	/**
+	 * Registers a Cleanable instance to the store.
+	 *
+	 * @param {Cleanable} instance - The Cleanable instance to be registered.
+	 */
 	add(instance: Cleanable) {
 		this.instances.push(instance)
 	}
+
+	/**
+	 * Cleans all registered Cleanable instances and removes them from the store.
+	 */
 	clean() {
+		console.log(`Cleaning up ${this.instances.length} instance(s)`)
 		for (let instance of this.instances)
 			instance.cleanup()
 		this.instances = []  // remove references to allow garbage collection
 	}
 }
+
 export const cleanableStore = new CleanableStore()
 
-/*  */
+/**
+ * A router for managing application routes.
+ */
 class Router {
 	routes: Record<string, () => void>
 	currentPath: string = ''
@@ -50,16 +70,19 @@ class Router {
 		})
 	}
 
-	public navigate(path: string) {
-		history.pushState(null, '', `${BASE_PATH}${path}`)
+	/**
+	 * Navigates to the specified path.
+	 *
+	 * @param {string} path - The path to navigate to.
+	 */
+	private navigate(path: string) {
+		history.pushState(null, '', `${path}`)
 		this.pathChanged()
 	}
 
-	pathChanged() {
+	private pathChanged() {
 		// If we are at the root of our app, default to '/home'
-		let path = window.location.pathname.startsWith(BASE_PATH)
-			? window.location.pathname.slice(BASE_PATH.length)
-			: window.location.pathname
+		let path = window.location.pathname
 
 		path = path in this.routes ? path : '/home'
 
@@ -84,7 +107,7 @@ class Router {
 				e.preventDefault()
 				const href = e.target.getAttribute('href')
 				if (href !== null) {
-					const cleanedHref = href.replace(`${BASE_PATH}/`, '/')
+					const cleanedHref = href.replace(`/`, '/')
 					this.navigate(`${cleanedHref}`)
 				}
 			}
@@ -113,7 +136,7 @@ class Router {
 
 	// Fetch the HTML and insert it into the DOM
 	private loadContent(path: string): void {
-		fetch(`${BASE_PATH}/pages${this.currentPath}.html`)
+		fetch(`/pages${this.currentPath}.html`)
 			.then(response => {
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`)
